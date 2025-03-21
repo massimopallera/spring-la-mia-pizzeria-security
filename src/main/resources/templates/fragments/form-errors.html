@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+    <th:block th:fragment="form-errors(element)">
+        <div class="invalid-feedback" th:if="${#fields.hasErrors(${element})}">
+            <ul>
+                <li th:each="err : ${#fields.errors(${element})}" th:text="${err}"></li>
+            </ul>
+        </div>
+    </th:block>
+    
+</body>
+</html>

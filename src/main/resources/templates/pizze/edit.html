@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="~{fragments/head :: head}"></th:block>
+</head>
+<body>
+    
+    <header th:replace="~{fragments/header :: header}"></header>
+
+    <main class="container">
+        <th:block th:replace="~{fragments/form :: form('/pizze/edit/' + ${pizza.id}, 'Update')}"></th:block>
+    </main>
+
+</body>
+</html>

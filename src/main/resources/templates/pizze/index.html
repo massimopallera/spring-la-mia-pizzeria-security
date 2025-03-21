@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <div th:replace="~{fragments/head :: head}"></div>
+</head>
+
+<body>    
+
+    <header th:replace="~{fragments/header :: header}"></header>
+
+
+    <div class="container my-5 py-2">
+        <div th:if="${pizze.size()} > 0" th:each="pizza : ${pizze}" th:object="${pizza}">
+            <hr>
+            <div class="d-flex px-5 align-items-center">
+                <div class="col-8">
+                    <div><h2><a th:href="|/pizze/*{id}|">[[*{name}]]</a></h2></div>
+                    <div class="fs-4">Descrizione: [[*{description}]]</div>
+                    <div class="fs-4">Prezzo: €[[*{price}]]</div>
+
+                    <div class="d-flex gap-3 my-4">
+                        <a th:href="|/pizze/edit/*{id}|" class="btn btn-primary">Modifica</a>
+                        <form action="#" method="post" th:action="@{pizze/delete/{id}(id=*{id})}">
+                            <button class="btn btn-danger">Elimina</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-4 text-end">
+                    <img class="img-fluid" th:src="@{*{photoUrl}}" alt="Pizza img">
+                </div>
+            </div>
+            <hr>
+        </div>
+
+        <div th:unless="${pizze.size()} > 0">
+            <div>No Pizza 4 u</div>
+        </div>
+    </div>
+        
+
+    <!-- Script JS -->
+    <!-- <script th:src="@{/webjars/jquery/3.6.4/jquery.min.js}"></script>-->
+    <!-- <script th:src="@{/webjars/popper.js/2.11.6/umd/popper.min.js}"></script> -->
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script> 
+</body>
+</html>
