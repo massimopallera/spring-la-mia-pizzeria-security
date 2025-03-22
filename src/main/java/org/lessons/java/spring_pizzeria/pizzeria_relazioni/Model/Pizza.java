@@ -1,9 +1,12 @@
 package org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -42,6 +45,9 @@ public class Pizza {
     @Max(value = 999, message = "Price must be less than 999")
     private Double price;
 
+    @OneToMany(mappedBy = "pizza")
+    private List<Discount> discount; 
+    
 
     @Override
     public String toString(){
@@ -116,6 +122,21 @@ public class Pizza {
      */
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+
+    /**
+     * @return List<Discount> return the discount
+     */
+    public List<Discount> getDiscount() {
+        return discount;
+    }
+
+    /**
+     * @param discount the discount to set
+     */
+    public void setDiscount(List<Discount> discount) {
+        this.discount = discount;
     }
 
 }
