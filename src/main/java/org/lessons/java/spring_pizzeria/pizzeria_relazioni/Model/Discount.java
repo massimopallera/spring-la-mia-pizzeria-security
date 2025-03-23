@@ -33,11 +33,11 @@ public class Discount {
     @NotBlank
     private String title;
 
+// * una pizza -> N offerte
     @ManyToOne
     @JoinColumn( name = "pizza_id", nullable=false )
     private Pizza pizza;
 
-    // * una pizza -> N offerte
 
     /**
      * @return Integer return the id

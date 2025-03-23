@@ -42,7 +42,13 @@
                         <td>[[*{title}]]</td>
                         <td>[[*{startDate}]]</td>
                         <td>[[*{endDate}]]</td>
-                        <td class="text-center"><a th:href="@{/discounts/edit/{id}(id=*{id})}" class="btn btn-success">Update</a></td>
+                        <td class="text-center">
+                            <a th:href="@{/discounts/edit/{id}(id=*{id})}" class="btn btn-success">Update</a>
+                            <form method="post" th:action="@{/discounts/delete/{id}(id=*{id})}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                            
+                        </td>
                       </tr>
                     </tbody>
                   </table>

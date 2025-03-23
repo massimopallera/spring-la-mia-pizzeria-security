@@ -14,13 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 @Controller
 @RequestMapping("/discounts")
@@ -29,12 +26,15 @@ public class DiscountController {
     @Autowired
     private DiscountRepository discountRepo;
 
+    @Autowired
+    private PizzaRepository pizzaRepo;
+
     // * ID is for pizza
     @GetMapping("/create")
     public String create(Model model, @RequestParam(required = true) Integer id) {
         
         model.addAttribute("discount", new Discount());
-        // model.addAttribute("pizzaId", (id));
+        model.addAttribute("pizzaId", id);
 
         return "discounts/create";
     }
@@ -47,16 +47,10 @@ public class DiscountController {
             return "discounts/create?id=" + model.getAttribute("pizzaId");
         }
 
-        Pizza pizzaId = new Pizza();
-        pizzaId.setId(id);
+        Pizza pizza = pizzaRepo.findById(id).get();
 
-        discountForm.setPizza( pizzaId );
-        
+        discountForm.setPizza(pizza);        
         discountRepo.save(discountForm);
-
-        // save pizzaId in discountForm
-
-
 
         return "redirect:/pizze/" + discountForm.getPizza().getId();
     }
@@ -90,6 +84,15 @@ public class DiscountController {
         return "redirect:/pizze/" + discountForm.getPizza().getId();
     }
     
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+
+        Integer pizzaId = discountRepo.findById(id).get().getPizza().getId();
+
+        discountRepo.deleteById(id);
+
+        return "redirect:/pizze/" + pizzaId;
+    }
     
     
 }
