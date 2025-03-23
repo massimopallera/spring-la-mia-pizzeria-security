@@ -10,10 +10,10 @@
     <header th:replace="~{fragments/header :: header}"></header>
 
 
-    <div class="container my-5 py-2">
+    <div class="container my-5 py-2 px-5" th:if="${pizza} != false" th:object="${pizza}">
 
-        <div th:if="${pizza} != false" th:object="${pizza}">
-            <div class="d-flex px-5 align-items-center">
+        <div>
+            <div class="d-flex align-items-center">
                 <div class="col-8">
                     <div><h2>[[*{name}]]</h2></div>
                     <div class="fs-4">Descrizione: [[*{description}]]</div>
@@ -24,12 +24,43 @@
                     <img class="img-fluid" th:src="@{*{photoUrl}}" alt="">
                 </div>
             </div>
+
+            <div th:if="*{discount.size() > 0}" >
+                <h3>Discounts</h3>
+
+                <table class="table" th:each="discount : *{discount}" th:object="${discount}">
+                    <thead>
+                      <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="align-middle">
+                        <td>[[*{title}]]</td>
+                        <td>[[*{startDate}]]</td>
+                        <td>[[*{endDate}]]</td>
+                        <td class="text-center"><a th:href="@{/discounts/edit/{id}(id=*{id})}" class="btn btn-success">Update</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+
+            <div class="d-flex justify-content-center gap-3 align-items-center my-5" th:unless="*{discount.size() > 0}">
+                <h3>Non sono presenti sconti</h3>
+                <a th:href="@{|/discounts/create?id=*{id}|}" class="btn btn-primary py-2 px-3">
+                    Aggiungi Sconto
+                </a>
+            </div>
         </div>
 
 
-        <div th:unless="${pizza} != false">
-            <div>No Pizza Found</div>
-        </div>
+    </div>
+
+    <div th:unless="${pizza} != false">
+        <div>No Pizza Found</div>
     </div>
         
 

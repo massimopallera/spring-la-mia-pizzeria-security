@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <th:block th:insert="~{fragments/head :: head}"></th:block>
+
+</head>
+<body>
+    
+    <th:block th:insert="~{fragments/header :: header}"></th:block>
+
+    <main class="container px-5 my-5">
+        <th:block th:insert="~{fragments/forms :: discount-form('', 'Create')}"></th:block>
+    </main>
+
+</body>
+</html>

@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -23,11 +22,11 @@ public class Discount {
     private Integer id;
 
     @FutureOrPresent
-    @NotBlank
+    // @NotBlank
     private LocalDate startDate;
 
     @FutureOrPresent
-    @NotBlank
+    // @NotBlank
     private LocalDate endDate;
 
     @Size(min = 5, max = 255 ,message = "Title cannot be less than 5 characters")
@@ -112,6 +111,6 @@ public class Discount {
 
     @Override
     public String toString(){
-        return String.format("Discount: %s %d %d", title, startDate, endDate);
+        return String.format("Discount: %s", title);
     }
 }

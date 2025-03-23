@@ -2,7 +2,7 @@
 <html lang="en">
 <body>
 
-    <th:block th:fragment="form(formAction, submitText)">
+    <th:block th:fragment="pizza-form(formAction, submitText)">
 
         <form method="post" class="d-flex flex-column gap-4" th:action="@{${formAction}}" id="pizza-form" th:object="${pizza}">
 
@@ -52,6 +52,49 @@
 
         </form>
         
+    </th:block>
+
+    <th:block th:fragment="discount-form(formAction, submitText)">
+        
+        <form th:object="${discount}" method="post" th:action="@{${formAction}}" class="d-flex flex-column gap-4" id="discount-form">
+
+            <input type="hidden" th:field="*{pizza.id}" value="*{pizza.id}">
+
+            <div>
+                <label for="title">Nome Offerta: </label>
+                <input type="text" id="title" th:field="*{title}" th:errorClass="is-invalid" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <label for="startDate">Data di Inizio: </label>
+                <input type="date" id="startDate" th:field="*{startDate}" th:errorClass="is-invalid"required th:value="${#temporals.format(startDate, 'yyyy-MM-dd')}" >
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('startDate')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('startDate')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <label for="endDate">Data di Fine: </label>
+                <input type="date" id="endDate" th:field="*{endDate}" th:errorClass="is-invalid"required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('endDate')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('endDate')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">[[${submitText}]]</button>
+            </div>
+        </form>        
+   
     </th:block>
 
     

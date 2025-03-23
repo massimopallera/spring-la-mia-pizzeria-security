@@ -8,7 +8,7 @@
     <header th:replace="~{fragments/header :: header}"></header>
 
     <main class="container">
-        <th:block th:replace="~{fragments/form :: form('/pizze/edit/' + ${pizza.id}, 'Update')}"></th:block>
+        <th:block th:replace="~{fragments/forms :: pizza-form('/pizze/edit/' + ${pizza.id}, 'Update')}"></th:block>
     </main>
 
 </body>
