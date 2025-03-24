@@ -25,31 +25,15 @@ public class DiscountController {
 
     @Autowired
     private DiscountRepository discountRepo;
-
-    @Autowired
-    private PizzaRepository pizzaRepo;
-
-    // * ID is for pizza
-    @GetMapping("/create")
-    public String create(Model model, @RequestParam(required = true) Integer id) {
-        
-        model.addAttribute("discount", new Discount());
-        model.addAttribute("pizzaId", id);
-
-        return "discounts/create";
-    }
     
     @PostMapping("/create")
-    public String store(@Valid @ModelAttribute("discount") Discount discountForm, BindingResult br, Model model, @RequestParam(required = true) Integer id) {        
+    public String store(@Valid @ModelAttribute("discount") Discount discountForm, BindingResult br, Model model) {        
         
         if(br.hasErrors()){
             model.addAttribute("discount", discountForm);
             return "discounts/create?id=" + model.getAttribute("pizzaId");
         }
 
-        Pizza pizza = pizzaRepo.findById(id).get();
-
-        discountForm.setPizza(pizza);        
         discountRepo.save(discountForm);
 
         return "redirect:/pizze/" + discountForm.getPizza().getId();

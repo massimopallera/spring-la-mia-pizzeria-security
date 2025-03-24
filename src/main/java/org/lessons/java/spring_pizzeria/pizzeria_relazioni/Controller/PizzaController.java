@@ -2,7 +2,10 @@ package org.lessons.java.spring_pizzeria.pizzeria_relazioni.Controller;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model.Discount;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model.Pizza;
+import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Repository.DiscountRepository;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,13 +19,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/pizze")
 public class PizzaController {
     
     @Autowired
-    private PizzaRepository repo;
+    private PizzaRepository pizzaRepo;
+
+    @Autowired
+    private DiscountRepository discountRepo;
 
 
     // * Return index page with all elements
@@ -30,7 +38,7 @@ public class PizzaController {
     public String index(Model model) {
 
         // * Create List of pizzas
-        List<Pizza> pizze = repo.findAll(); 
+        List<Pizza> pizze = pizzaRepo.findAll(); 
         model.addAttribute("pizze", pizze); 
 
         return "pizze/index";
@@ -41,7 +49,7 @@ public class PizzaController {
     public String show(Model model, @PathVariable("id") Integer id ) {
         // * Search for element id
         try{
-            Pizza pizza = repo.findById(id).get();
+            Pizza pizza = pizzaRepo.findById(id).get();
             model.addAttribute("pizza", pizza);
         } catch (NoSuchElementException e) {
             // ? NoSuchElementException is thrown when the id is not found.
@@ -72,7 +80,7 @@ public class PizzaController {
 
         if(pizzaForm.getPhotoUrl() == null) pizzaForm.setPhotoUrl("https://placehold.co/300"); // ! To change. It must be insert from user
 
-        repo.save(pizzaForm); // * Save pizza in db
+        pizzaRepo.save(pizzaForm); // * Save pizza in db
 
         return "redirect:/pizze"; // * Redirect user to index page 
     }
@@ -84,7 +92,7 @@ public class PizzaController {
 
         // * Search for Pizza in db
         try {
-            Pizza toEdit = repo.findById(id).get();
+            Pizza toEdit = pizzaRepo.findById(id).get();
             toEdit.setId(id);
             model.addAttribute("pizza", toEdit);
         } catch (NoSuchElementException e) {
@@ -106,7 +114,7 @@ public class PizzaController {
         //? Check if photoUrl is not null, else give it a default link
         if(pizzaForm.getPhotoUrl() == null) pizzaForm.setPhotoUrl("https://placehold.co/300"); 
 
-        repo.save(pizzaForm);
+        pizzaRepo.save(pizzaForm);
 
         return "redirect:/pizze";
     }
@@ -116,9 +124,22 @@ public class PizzaController {
     @PostMapping("/delete/{id}")
     public String destroy(@PathVariable Integer id) {
         
-        repo.deleteById(id);
+        pizzaRepo.deleteById(id);
 
         return "redirect:/pizze";
     }
+
+
+    @GetMapping("/{id}/discounts/create")
+    public String offer(@PathVariable Integer id, Model model) {
+
+        Discount discount = new Discount();
+        discount.setPizza(pizzaRepo.findById(id).get());
+
+        model.addAttribute("discount", discount);
+
+        return "discounts/create";
+    }
+    
     
 }

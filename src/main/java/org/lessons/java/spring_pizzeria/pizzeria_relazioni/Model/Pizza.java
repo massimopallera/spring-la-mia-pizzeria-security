@@ -46,7 +46,7 @@ public class Pizza {
     private Double price;
 
     @OneToMany(mappedBy = "pizza")
-    private List<Discount> discount; 
+    private List<Discount> discounts; 
     
 
     @Override
@@ -126,17 +126,17 @@ public class Pizza {
 
 
     /**
-     * @return List<Discount> return the discount
+     * @return List<Discount> return the discounts
      */
-    public List<Discount> getDiscount() {
-        return discount;
+    public List<Discount> getDiscounts() {
+        return discounts;
     }
 
     /**
-     * @param discount the discount to set
+     * @param discounts the discounts to set
      */
-    public void setDiscount(List<Discount> discount) {
-        this.discount = discount;
+    public void setDiscounts(List<Discount> discounts) {
+        this.discounts = discounts;
     }
 
 }
