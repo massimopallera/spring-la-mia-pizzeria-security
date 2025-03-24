@@ -10,6 +10,9 @@
     <th:block th:insert="~{fragments/header :: header}"></th:block>
 
     <main class="container px-5 my-5">
+
+        <h2 class="text-center">Create new discount for [[${discount.pizza.name}]]</h2>
+
         <th:block th:insert="~{fragments/forms :: discount-form('/discounts/create', 'Create')}"></th:block>
     </main>
 
