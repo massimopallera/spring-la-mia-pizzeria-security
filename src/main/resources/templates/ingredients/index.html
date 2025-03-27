@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <th:block th:if="${ingredients.size()} > 0 " th:each="ingredient : ${ingredients}" th:object="${ingredient}">
+        <div>[[*{name}]]</div>
+    </th:block>
+    <th:block th:unless="${ingredients.size()} > 0 ">Not Found</th:block>
+
+</body>
+</html>

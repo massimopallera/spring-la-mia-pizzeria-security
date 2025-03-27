@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @Controller
 @RequestMapping("/pizze")
@@ -28,10 +26,6 @@ public class PizzaController {
     
     @Autowired
     private PizzaRepository pizzaRepo;
-
-    @Autowired
-    private DiscountRepository discountRepo;
-
 
     // * Return index page with all elements
     @GetMapping
@@ -140,6 +134,5 @@ public class PizzaController {
 
         return "discounts/create";
     }
-    
-    
+       
 }
