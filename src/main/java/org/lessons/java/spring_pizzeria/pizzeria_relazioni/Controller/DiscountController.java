@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/discounts")
@@ -22,7 +24,7 @@ public class DiscountController {
 
     @Autowired
     private DiscountRepository discountRepo;
-    
+
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("discount") Discount discountForm, BindingResult br, Model model) {        
         

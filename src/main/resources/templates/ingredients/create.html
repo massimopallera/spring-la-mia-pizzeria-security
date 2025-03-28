@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <th:block th:replace="~{fragments/head :: head}"></th:block>
+    
+</head>
+<body>
+    <header th:replace="~{fragments/header :: header}"></header>
+
+    <main class="container my-5">
+        <form th:action="@{/ingredients/create}" method="post" th:object="${ingredient}">
+            
+            <label for="name">Ingrediente: </label>
+            <input type="text" id="name" th:field="*{name}" th:errorClass="is-invalid" required>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                </ul>
+            </div>
+
+            <button type="submit">Crea</button>
+        </form>
+    </main>
+    
+</body>
+</html>

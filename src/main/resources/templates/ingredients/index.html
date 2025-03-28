@@ -1,16 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  
+    <th:block th:replace="~{fragments/head :: head}"></th:block>
+
 </head>
 <body>
+
+    <header th:replace="~{fragments/header :: header}"></header>
     
-    <th:block th:if="${ingredients.size()} > 0 " th:each="ingredient : ${ingredients}" th:object="${ingredient}">
-        <div>[[*{name}]]</div>
-    </th:block>
-    <th:block th:unless="${ingredients.size()} > 0 ">Not Found</th:block>
+    <main class="container my-5">
+        <th:block th:if="${ingredients.size()} > 0 " th:each="ingredient : ${ingredients}" th:object="${ingredient}">
+            <div class="d-flex justify-content-between my-3">
+                <div class="">
+                    <h3>[[*{name}]]</h3>
+                </div>    
+                <div class="d-flex gap-4">
+                    <a th:href="@{ingredients/edit/{id}(id=*{id})}" class="btn btn-primary">Update</a>
+                    <form action="">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>    
+
+        </th:block>
+        <th:block th:unless="${ingredients.size()} > 0 ">Not Found</th:block>
+    </main>
 
 </body>
 </html>

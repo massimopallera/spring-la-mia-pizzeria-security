@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <th:block th:replace="~{fragments/head :: head}"></th:block>
+
 </head>
 <body>
+
+    <header th:replace="~{fragments/header :: header}"></header>
     
     <th:block th:if="${ingredient} != false" th:object="${ingredient}">
         <div>[[*{name}]]</div>
