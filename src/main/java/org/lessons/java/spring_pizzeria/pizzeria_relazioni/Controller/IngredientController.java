@@ -3,7 +3,9 @@ package org.lessons.java.spring_pizzeria.pizzeria_relazioni.Controller;
 import java.util.NoSuchElementException;
 
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model.Ingredient;
+import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model.Pizza;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Repository.IngredientRepository;
+import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,9 @@ public class IngredientController {
     @Autowired
     IngredientRepository repo;
 
+    @Autowired
+    PizzaRepository pizzaRepo;
+
     @GetMapping("")
     public String index(Model model) {
 
@@ -45,6 +50,10 @@ public class IngredientController {
         try {
             Ingredient ingredient = repo.findById(id).get();
             model.addAttribute("ingredient", ingredient);
+
+            for (Pizza pizza : ingredient.getPizze()) {
+                System.out.println(pizza.getName());
+            }
             
         } catch (NoSuchElementException e) {
             model.addAttribute("ingredient", false);
@@ -55,41 +64,20 @@ public class IngredientController {
         return "ingredients/show";
     }
     
-    @GetMapping("/edit/{id}")
-    public String edit(Model model, @PathVariable Integer id) {
-
-        try{
-            model.addAttribute("ingredient", repo.findById(id).get());
-        } catch (NoSuchElementException e){
-            model.addAttribute("ingredient", false);
-        }
-        
-        return "ingredients/edit";
-    }
-
-    @PostMapping("/edit/{id}")
-    public String store(@Valid @ModelAttribute Ingredient ingredient, BindingResult br) {
-
-        if (br.hasErrors()) {
-            return "ingredients/edit";
-        }
-
-        repo.save(ingredient);
-            
-        return "redirect:/ingredients";
-    }
-
+    
     @GetMapping("/create")
     public String createForm(Model model) {
         model.addAttribute("ingredient", new Ingredient());
+        model.addAttribute("pizze", pizzaRepo.findAll());
         
         return "ingredients/create";
     }
 
     @PostMapping("/create")
-    public String create(@Valid @ModelAttribute Ingredient ingredient, BindingResult br) {
+    public String create(@Valid @ModelAttribute Ingredient ingredient, BindingResult br, Model model) {
 
         if (br.hasErrors()) {
+            model.addAttribute("pizze", pizzaRepo.findAll());
             return "ingredients/create";
         }
 
@@ -98,7 +86,46 @@ public class IngredientController {
         return "redirect:/ingredients";
     }
     
-    
+    @GetMapping("/edit/{id}")
+    public String edit(Model model, @PathVariable Integer id) {
+
+        try{
+            model.addAttribute("ingredient", repo.findById(id).get());
+            model.addAttribute("pizze", pizzaRepo.findAll());
+        } catch (NoSuchElementException e){
+            model.addAttribute("ingredient", false);
+        }
+        
+        return "ingredients/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String store(@Valid @ModelAttribute Ingredient ingredient, BindingResult br, Model model) {
+
+        if (br.hasErrors()) {
+            model.addAttribute("pizze", pizzaRepo.findAll());
+            return "ingredients/edit";
+        }
+
+        repo.save(ingredient);
+            
+        return "redirect:/ingredients";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        
+        Ingredient toDelete = repo.findById(id).get();
+
+        for (Pizza pizza : toDelete.getPizze()) {
+            pizza.getIngredients().remove(toDelete);
+        }
+
+        repo.delete(toDelete);
+
+        return "redirect:/ingredients";
+
+    }
     
 
 }

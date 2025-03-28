@@ -38,7 +38,6 @@ public class DiscountController {
         return "redirect:/pizze/" + discountForm.getPizza().getId();
     }
     
-
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
 

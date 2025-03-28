@@ -26,6 +26,13 @@
                 </div>
             </div>
 
+            <label class="mt-5" for="">Ingredienti:</label>
+            <div th:each="ingredient : ${ingredients}" th:object="${ingredient}">
+                
+                <input type="checkbox" th:id="|*{name}-*{id}|" th:field="${pizza.ingredients}" th:value="*{id}">
+                <label th:for="|*{name}-*{id}|">[[*{name}]]</label>
+            </div>
+
             <div>
                 <label for="photoUrl">Photo URL: </label>
                 <input type="text" id="photoUrl" th:field="*{photoUrl}" th:errorClass="is-invalid"required>

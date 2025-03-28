@@ -35,6 +35,11 @@ public class Ingredient {
     private List<Pizza> pizze;
 
 
+    @Override
+    public String toString(){
+        return String.format("Nome: %s", name);
+    }
+
     /**
      * @return Integer return the id
      */

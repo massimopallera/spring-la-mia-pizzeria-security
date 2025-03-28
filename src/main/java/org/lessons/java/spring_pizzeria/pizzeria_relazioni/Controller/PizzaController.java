@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model.Discount;
+import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model.Ingredient;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model.Pizza;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Repository.DiscountRepository;
+import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Repository.IngredientRepository;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,9 @@ public class PizzaController {
     
     @Autowired
     private PizzaRepository pizzaRepo;
+
+    @Autowired
+    private IngredientRepository ingredientRepo;
 
     // * Return index page with all elements
     @GetMapping
@@ -58,6 +63,8 @@ public class PizzaController {
     public String returnForm(Model model) {
 
         model.addAttribute("pizza", new Pizza());
+        model.addAttribute("ingredients", ingredientRepo.findAll());
+
 
         return "/pizze/create";
     }
@@ -68,7 +75,7 @@ public class PizzaController {
 
         // * Check errors
         if (br.hasErrors()) {
-            model.addAttribute("pizza", pizzaForm);
+            model.addAttribute("ingredients", ingredientRepo.findAll());
             return "pizze/create";
         }
 
@@ -89,6 +96,7 @@ public class PizzaController {
             Pizza toEdit = pizzaRepo.findById(id).get();
             toEdit.setId(id);
             model.addAttribute("pizza", toEdit);
+            model.addAttribute("ingredients", ingredientRepo.findAll());
         } catch (NoSuchElementException e) {
             model.addAttribute("pizza", false);
         }
@@ -101,7 +109,7 @@ public class PizzaController {
     public String update(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult br, Model model){
 
         if (br.hasErrors()) {
-            model.addAttribute("pizza", pizzaForm);
+            model.addAttribute("ingredients", ingredientRepo.findAll());
             return "pizze/edit";
         }
 
@@ -118,7 +126,13 @@ public class PizzaController {
     @PostMapping("/delete/{id}")
     public String destroy(@PathVariable Integer id) {
         
-        pizzaRepo.deleteById(id);
+        Pizza toDelete = pizzaRepo.findById(id).get();
+
+        for (Ingredient ingredient : toDelete.getIngredients()) {
+            ingredient.getPizze().remove(toDelete);
+        }
+
+        pizzaRepo.delete(toDelete);
 
         return "redirect:/pizze";
     }

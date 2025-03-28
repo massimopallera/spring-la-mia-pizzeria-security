@@ -17,6 +17,12 @@
                     <div><h2>[[*{name}]]</h2></div>
                     <div class="fs-4">Descrizione: [[*{description}]]</div>
                     <div class="fs-4">Prezzo: €[[*{price}]]</div>
+
+                    <h3>Ingredienti</h3>
+                    <ul th:each="ingredient : ${pizza.ingredients}" th:object="${ingredient}">
+                        <li>[[*{name}]]</li>
+                    </ul>
+
                 </div>
 
                 <div class="col-4 text-end">

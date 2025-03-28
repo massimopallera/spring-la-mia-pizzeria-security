@@ -19,7 +19,15 @@
                 </ul>
             </div>
 
-            <button type="submit">Update</button>
+
+            <br><label class="mt-5" for="">Pizze in cui è presente</label><br>
+            <div th:each="pizza : ${pizze}" th:object="${pizza}">
+                
+                <input type="checkbox" th:id="|*{name}-*{id}|" th:field="${ingredient.pizze}" th:value="*{id}">
+                <label th:for="|*{name}-*{id}|">[[*{name}]]</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update</button>
         </form>
 
         <div th:if="${ingredient} == false">
