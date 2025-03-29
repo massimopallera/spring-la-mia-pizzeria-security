@@ -6,7 +6,6 @@ import java.util.NoSuchElementException;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model.Discount;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model.Ingredient;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model.Pizza;
-import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Repository.DiscountRepository;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Repository.IngredientRepository;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
