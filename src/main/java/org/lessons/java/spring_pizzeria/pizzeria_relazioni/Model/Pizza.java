@@ -2,6 +2,9 @@ package org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -46,9 +49,11 @@ public class Pizza {
     @Max(value = 999, message = "Price must be less than 999")
     private Double price;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "pizza")
     private List<Discount> discounts; 
-    
+
+    @JsonIgnore
     @ManyToMany(mappedBy = "pizze")
     private List<Ingredient> ingredients;
 

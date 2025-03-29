@@ -2,6 +2,10 @@ package org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +31,7 @@ public class Ingredient {
 
     // ManyToMany Relation
     @ManyToMany
+    @JsonIgnore
     @JoinTable(
         name = "ingredient_pizza",
         joinColumns = @JoinColumn( name = "pizza_id" ),

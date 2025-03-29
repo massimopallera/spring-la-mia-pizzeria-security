@@ -2,6 +2,8 @@ package org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,6 +38,7 @@ public class Discount {
 // * una pizza -> N offerte
     @ManyToOne
     @JoinColumn( name = "pizza_id", nullable=false )
+    @JsonBackReference
     private Pizza pizza;
 
 
