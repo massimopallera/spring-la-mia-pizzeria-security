@@ -27,6 +27,11 @@ public class PizzaService {
     
     }
 
+    public List<Pizza> getByName(String str){
+        List<Pizza> pizze = repository.findByNameContainingIgnoreCase(str);
+        return pizze;
+    }
+
     public Pizza save(Pizza pizza){
         repository.save(pizza);
         return pizza;
