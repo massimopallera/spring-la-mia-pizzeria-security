@@ -37,5 +37,9 @@ public class PizzaService {
         return pizza;
     }
 
+    public void deleteById(Integer id){
+        repository.deleteById(id);
+    }
+
     
 }

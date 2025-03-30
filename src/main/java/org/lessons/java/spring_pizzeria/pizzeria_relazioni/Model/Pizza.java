@@ -53,7 +53,7 @@ public class Pizza {
     @OneToMany(mappedBy = "pizza")
     private List<Discount> discounts; 
 
-    @JsonIgnore
+    // @JsonIgnore
     @ManyToMany(mappedBy = "pizze")
     private List<Ingredient> ingredients;
 

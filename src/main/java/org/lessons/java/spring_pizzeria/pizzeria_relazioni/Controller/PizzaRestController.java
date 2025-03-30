@@ -1,28 +1,21 @@
 package org.lessons.java.spring_pizzeria.pizzeria_relazioni.Controller;
 
-import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import javax.naming.Binding;
-import javax.print.attribute.HashPrintServiceAttributeSet;
-
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model.Pizza;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMessage;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import jakarta.validation.Valid;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,11 +33,6 @@ public class PizzaRestController {
     @Autowired
     PizzaService service;
 
-    // @GetMapping
-    // public List<Pizza> index() {
-    //     return service.getAll();
-    // }
-
     @GetMapping
     public List<Pizza> index(@RequestParam(required = false) String name) {
         
@@ -55,7 +43,7 @@ public class PizzaRestController {
         } else {
             result = service.getAll();
         }
-        
+
         return result;
     }
     
@@ -100,7 +88,12 @@ public class PizzaRestController {
         service.save(pizza);
 
         return new ResponseEntity<Pizza>(pizza, HttpStatus.OK);
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id){
+        service.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     
     
