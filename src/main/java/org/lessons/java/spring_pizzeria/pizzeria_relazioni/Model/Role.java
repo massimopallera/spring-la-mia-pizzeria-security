@@ -54,4 +54,19 @@ public class Role {
         this.name = name;
     }
 
+
+    /**
+     * @return Set<User> return the users
+     */
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    /**
+     * @param users the users to set
+     */
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
 }

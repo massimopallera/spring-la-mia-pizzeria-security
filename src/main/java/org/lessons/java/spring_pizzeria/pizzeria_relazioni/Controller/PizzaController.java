@@ -9,6 +9,7 @@ import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Model.Pizza;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Repository.IngredientRepository;
 import org.lessons.java.spring_pizzeria.pizzeria_relazioni.Repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,7 +39,7 @@ public class PizzaController {
         // * Create List of pizzas
         List<Pizza> pizze = pizzaRepo.findAll(); 
         model.addAttribute("pizze", pizze); 
-
+        // model.addAttribute("username", auth.getName()); 
         return "pizze/index";
     }
 
